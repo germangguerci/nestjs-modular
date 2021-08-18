@@ -24,11 +24,11 @@ export class UsersService {
     },
   ];
 
-  findAll() {
+  async findAll() {
     const apiKey = this.configService.get('API_KEY');
     const dbName = this.configService.get('DATABASE_NAME');
     console.log(apiKey, dbName);
-    return this.users;
+    return this.productsService.findAll();
   }
 
   findOne(id: number) {
@@ -68,12 +68,12 @@ export class UsersService {
     return true;
   }
 
-  getOrderByUser(id: number): Order {
+  async getOrderByUser(id: number) {
     const user = this.findOne(id);
     return {
       date: new Date(),
       user,
-      products: this.productsService.findAll(),
+      products: await this.productsService.findAll(),
     };
   }
 }
